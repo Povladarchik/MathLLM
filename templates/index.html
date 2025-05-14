@@ -79,11 +79,24 @@
       background-color: #fcd5ce !important;
       border-left-color: #dc3545 !important;
     }
-    .step-text {
-     white-space: pre-wrap;
-     word-wrap: break-word;
-     line-height: 1.5;
-    }
+    .step-text, .step-box pre {
+  white-space: pre-wrap;      /* Allow line breaks */
+  word-wrap: break-word;      /* Break long words */
+  word-break: break-all;      /* Force break if needed */
+  overflow-wrap: break-word;  /* Modern alternative to word-wrap */
+}
+
+.code-block {
+  display: none;
+  margin-top: 0.5rem;
+  background-color: #f8f9fa;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  font-family: monospace;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-x: auto;
+}
 
     .time-badge {
   position: absolute;
@@ -142,6 +155,17 @@
   </style>
 </head>
 <body>
+<!-- Beautiful Header -->
+<header class="mb-4 text-center w-100">
+  <div class="form-container d-inline-block" style="width: auto; max-width: 900px;">
+    <div class="p-4 rounded-3 shadow-sm" style="background-color: transparent; border: none;">
+      <h1 class="h2 fw-bold mb-2">Math Solution Verifier</h1>
+      <p class="mb-0 text-muted">
+        Paste or upload your solution for step-by-step verification
+      </p>
+    </div>
+  </div>
+</header>
 <div class="container py-4">
   <div class="form-container">
     <!-- Textarea Section -->
