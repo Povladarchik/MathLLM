@@ -8,6 +8,7 @@ logging.basicConfig(level=logging.INFO)
 
 class YandexGPTApiError(Exception):
     """Базовое исключение для ошибок, связанных с Yandex GPT API."""
+
     pass
 
 
@@ -23,7 +24,7 @@ class YandexGPTApi:
         """
         self.headers = {
             "Content-Type": "application/json",
-            "Authorization": f"Api-Key {api_key}"
+            "Authorization": f"Api-Key {api_key}",
         }
         self.model_uri = model_uri
 
@@ -32,7 +33,7 @@ class YandexGPTApi:
         system_text: str,
         user_text: str,
         temperature: float = 0.3,
-        max_tokens: int = 2048
+        max_tokens: int = 2048,
     ) -> str:
         """
         Отправляет запрос к модели Yandex GPT и возвращает сгенерированный ответ.
@@ -49,12 +50,12 @@ class YandexGPTApi:
             "completionOptions": {
                 "stream": False,
                 "temperature": temperature,
-                "maxTokens": max_tokens
+                "maxTokens": max_tokens,
             },
             "messages": [
                 {"role": "system", "text": system_text},
-                {"role": "user", "text": user_text}
-            ]
+                {"role": "user", "text": user_text},
+            ],
         }
 
         try:
@@ -68,7 +69,7 @@ class YandexGPTApi:
         try:
             result = response.json()
             logger.debug(f"Получен ответ от API: {result}")
-            return result['result']['alternatives'][0]['message']['text']
+            return result["result"]["alternatives"][0]["message"]["text"]
         except KeyError as e:
             logger.error(f"Ошибка разбора ответа API: отсутствует ключ {e}")
             raise YandexGPTApiError("Некорректный формат ответа от API") from e
@@ -80,4 +81,8 @@ if __name__ == "__main__":
     model_uri = f"gpt://{folder_id}/yandexgpt-lite"
 
     llm = YandexGPTApi(api_key=secret_key, model_uri=model_uri)
-    print(llm.send_prompt(system_text='Ты умный ассистент!', user_text='Сколько тебе лет?'))
+    print(
+        llm.send_prompt(
+            system_text="Ты умный ассистент!", user_text="Сколько тебе лет?"
+        )
+    )
